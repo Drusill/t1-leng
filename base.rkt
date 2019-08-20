@@ -32,9 +32,9 @@ get-exp ::= Polynomial -> Integer
 
 
 #|
-Función que verifica si un tipo Polynomial se encuentra en forma normal:
-- los exponentes son listados de mayor a menor (estricto)
-- los monomios de coeficiente 0 se omiten
+Verifica si un tipo Polynomial se encuentra en forma normal:
+- los exponentes exp son listados de mayor a menor (estricto)
+- los monomios de coeficiente coef igual a 0 se omiten
 nf? ::= Polynomial -> Boolean
 |#
 (define (nf? poly)
@@ -45,3 +45,34 @@ nf? ::= Polynomial -> Boolean
          (nf? rem)
          #f)]))
 
+#|
+Función auxiliar para la normalización de un polinomio. Suma el monomio (c * x^m) al
+polinomio poly, que está en forma normal, y devuelve el resultado en normalizado.
+sumaMon ::= Number Integer Polynomial -> Polynomial
+|#
+(define (sumaMon c m poly)
+  (match poly
+    [(nullp) (plus c m (nullp))]
+    [(plus coef exp rem)
+     (cond
+       [(> exp m) (plus coef exp (sumaMon c m rem))]
+       [(< exp m) (plus c m poly)]
+       [(= exp m) (if (zero? (+ coef c))
+                      rem
+                      (plus (+ coef c) exp rem))])]))
+
+#|
+Normaliza el polinomio bajo los criterios de la funcion nf?
+normalize ::= Polynomial -> Polynomial
+|#
+(define (normalize poly)
+  (match poly
+    [(nullp) poly]
+    [(plus coef exp rem)
+     (cond
+       [(nf? poly) poly]
+       [(= coef 0) (normalize rem)]
+       [(< exp (get-exp rem)) (normalize (sumaMon coef exp rem))]
+       [(> exp (get-exp rem)) (normalize (plus (plus-coef rem)
+                                               (plus-exp rem)
+                                               (sumaMon coef exp (plus-rem rem))))])]))
