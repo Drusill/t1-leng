@@ -20,10 +20,25 @@
 (test (nf? (plus 4 5 (plus 3 2 (plus 5 0 (nullp))))) #t)
 
 ;; sumaMon
-(test (sumaMon 6 6 (plus 4 4 (plus 2 2 (nullp)))) (plus 6 6 (plus 4 4 (plus 2 2 (nullp)))))
-(test (sumaMon 3 3 (plus 4 4 (plus 2 2 (nullp)))) (plus 4 4 (plus 3 3 (plus 2 2 (nullp)))))
-(test (sumaMon 10 2 (plus 4 4 (plus 2 2 (nullp)))) (plus 4 4 (plus 12 2 (nullp))))
-(test (sumaMon -2 2 (plus 4 4 (plus 2 2 (nullp)))) (plus 4 4 (nullp)))
+(test (sumaMon 6 6 (plus 4 4 (plus 2 2 (nullp))))
+      (plus 6 6 (plus 4 4 (plus 2 2 (nullp)))))
+(test (sumaMon 3 3 (plus 4 4 (plus 2 2 (nullp))))
+      (plus 4 4 (plus 3 3 (plus 2 2 (nullp)))))
+(test (sumaMon 10 2 (plus 4 4 (plus 2 2 (nullp))))
+      (plus 4 4 (plus 12 2 (nullp))))
+(test (sumaMon -2 2 (plus 4 4 (plus 2 2 (nullp))))
+      (plus 4 4 (nullp)))
+
+;; normalize
+(test (normalize (nullp)) (nullp))
+(test (normalize (plus 4 2 (plus 4 3 (nullp))))
+      (plus 4 3 (plus 4 2 (nullp))))
+(test (normalize (plus 4 4 (plus -4 4 (plus 1 1 (nullp)))))
+      (plus 1 1 (nullp)))
+(test (normalize (plus 0 5 (plus 4 7 (plus 0 4 (plus 1 10 (nullp))))))
+      (plus 1 10 (plus 4 7 (nullp))))
+(test (normalize (plus 4 5 (plus 8 10 (plus 0 8 (plus 7 10 (plus 2 7 (nullp)))))))
+      (plus 15 10 (plus 2 7 (plus 4 5 (nullp)))))
 
 
 
