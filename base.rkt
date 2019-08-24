@@ -76,3 +76,39 @@ normalize ::= Polynomial -> Polynomial
        [(> exp (get-exp rem)) (normalize (plus (plus-coef rem)
                                                (plus-exp rem)
                                                (sumaMon coef exp (plus-rem rem))))])]))
+
+;;;;;;;;;;;;;;;;;;;;;;     EJERICIO 2      ;;;;;;;;;;;;;;;;;;;;;;
+
+#|
+Retorna el grado de un polinomio no nulo
+degree ::= Polynomial -> Integer
+|#
+(define (degree poly)
+  (let ([n-poly (normalize poly)])
+    (match n-poly
+      [(nullp) (error "El polinomio nulo no tiene grado")]
+      [(plus coef exp rem)
+       (if (nullp? rem)
+           exp
+           (max exp (degree rem)))])))
+
+#|
+Función auxiliar
+Retorna el coeficiente asociado al exponente exp del polinomio normalizado poly
+coefficient-normalized ::= Integer Polynomial -> Number
+|#
+(define (coefficient-normalized exp-n poly)
+  (match poly
+    [(nullp) 0]
+    [(plus coef exp rem)
+     (if (= exp exp-n)
+         coef
+         (coefficient-normalized exp-n rem))]))
+
+#|
+Retorna el coeficiente asociado al exponente exp del polinomio poly
+coefficient ::= Integer Polynomial -> Number
+|#
+(define (coefficient exp poly)
+  (coefficient-normalized exp (normalize poly)))
+    
