@@ -19,7 +19,7 @@ Representacion de Polinomios
   (nullp)
   (plus coef exp rem))
 
-;;;;;;;;;;;;;;;;;;;;;;     EJERICIO 1      ;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 1      ;;;;;;;;;;;;;;;;;;;;;;
 
 #|
 Función auxiliar para obtener el exponente de un elemento del polinomio
@@ -52,7 +52,10 @@ sumaMon ::= Number Integer Polynomial -> Polynomial
 |#
 (define (sumaMon c m poly)
   (match poly
-    [(nullp) (plus c m (nullp))]
+    [(nullp)
+     (if (= c 0)
+         (nullp)
+         (plus c m (nullp)))]
     [(plus coef exp rem)
      (cond
        [(= c 0) poly]
@@ -73,13 +76,10 @@ normalize ::= Polynomial -> Polynomial
     [(plus coef exp rem)
      (cond
        [(nf? poly) poly]
-       [(= coef 0) (normalize rem)]
-       [(< exp (get-exp rem)) (normalize (sumaMon coef exp rem))]
-       [(> exp (get-exp rem)) (normalize (plus (plus-coef rem)
-                                               (plus-exp rem)
-                                               (sumaMon coef exp (plus-rem rem))))])]))
+       [(nf? rem) (sumaMon coef exp rem)]
+       [(not (nf? rem)) (normalize (sumaMon coef exp (normalize rem)))])]))
 
-;;;;;;;;;;;;;;;;;;;;;;     EJERICIO 2      ;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 2      ;;;;;;;;;;;;;;;;;;;;;;
 
 #|
 Retorna el grado de un polinomio no nulo
@@ -113,4 +113,11 @@ coefficient ::= Integer Polynomial -> Number
 |#
 (define (coefficient exp poly)
   (coefficient-normalized exp (normalize poly)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 3      ;;;;;;;;;;;;;;;;;;;;;;
+#|
+|#
+
+
     
