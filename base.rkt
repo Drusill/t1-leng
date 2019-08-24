@@ -55,6 +55,8 @@ sumaMon ::= Number Integer Polynomial -> Polynomial
     [(nullp) (plus c m (nullp))]
     [(plus coef exp rem)
      (cond
+       [(= c 0) poly]
+       [(= coef 0) rem]
        [(> exp m) (plus coef exp (sumaMon c m rem))]
        [(< exp m) (plus c m poly)]
        [(= exp m) (if (zero? (+ coef c))
