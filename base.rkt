@@ -47,7 +47,8 @@ nf? ::= Polynomial -> Boolean
 
 #|
 Función auxiliar para la normalización de un polinomio. Suma el monomio (c * x^m) al
-polinomio poly, que está en forma normal, y devuelve el resultado en normalizado.
+polinomio poly, que está en forma normal, y devuelve el resultado normalizado. Si poly
+no esta normalizado, el resultado tampoco estará normalizado
 sumaMon ::= Number Integer Polynomial -> Polynomial
 |#
 (define (sumaMon c m poly)
@@ -59,7 +60,6 @@ sumaMon ::= Number Integer Polynomial -> Polynomial
     [(plus coef exp rem)
      (cond
        [(= c 0) poly]
-       [(= coef 0) rem]
        [(> exp m) (plus coef exp (sumaMon c m rem))]
        [(< exp m) (plus c m poly)]
        [(= exp m) (if (zero? (+ coef c))
@@ -116,8 +116,20 @@ coefficient ::= Integer Polynomial -> Number
 
 
 ;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 3      ;;;;;;;;;;;;;;;;;;;;;;
+
 #|
+Suma de dos polinomios (no necesariamente normalizados). El resultado estará normalizado
+sumaPoly ::= Polynomial Polynomial -> Polynomial
 |#
+(define (sumaPoly l r)
+  (let ([x (normalize r)])
+    (match l
+      [(nullp) x]
+      [(plus coef exp rem) (sumaPoly rem (sumaMon coef exp x))])))
 
-
-    
+#|
+Devuelve el polinomio resultante de aplicar la funcion
+f a cada elemento del polinomio inicial, donde f debe ser
+una función que dado un número y un entero, retorna un par.
+mapPoly ::= (Number Integer -> Number * Integer) Polynomial -> Polynomial
+|#
