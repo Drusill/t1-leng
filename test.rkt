@@ -72,9 +72,20 @@
       (plus 8 7 (plus 8 3 (nullp))))
 
 ;; mapPoly
+(test (mapPoly (λ (c m) (cons (* c 2) (+ m 1))) (nullp)) (nullp))
+(test (mapPoly (λ (c m) (cons (* c 5) (+ m 7))) (plus 1 2 (plus 1 6 (plus 5 0 (nullp)))))
+      (plus 5 9 (plus 5 13 (plus 25 7 (nullp)))))
 (test (mapPoly (λ (c m) (cons (* c 2) (+ m 1))) (plus 4 5 (plus 3 2 (plus 5 0 (nullp)))))
       (plus 8 6 (plus 6 3 (plus 10 1 (nullp)))))
 
 ;; multPoly
+(test (multPoly (nullp) (nullp)) (nullp))
+(test (multPoly (nullp) (plus 1 2 (nullp))) (nullp))
+(test (multPoly (plus 1 2 (nullp)) (nullp)) (nullp))
+(test (multPoly (plus 1 2 (nullp)) (plus 2 1 (nullp))) (plus 2 3 (nullp)))
+(test (multPoly (plus 1 2 (plus 3 1 (plus 2 3 (nullp))))
+                (plus 2 5 (plus 3 7 (nullp))))
+      (plus 6 10 (plus 3 9 (plus 13 8 (plus 2 7 (plus 6 6 (nullp)))))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 4      ;;;;;;;;;;;;;;;;;;;;;;

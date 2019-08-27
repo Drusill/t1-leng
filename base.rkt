@@ -119,6 +119,7 @@ coefficient ::= Integer Polynomial -> Number
 
 #|
 Suma de dos polinomios (no necesariamente normalizados). El resultado estará normalizado
+debido al uso de sumaMon.
 sumaPoly ::= Polynomial Polynomial -> Polynomial
 |#
 (define (sumaPoly l r)
@@ -133,3 +134,21 @@ f a cada elemento del polinomio inicial, donde f debe ser
 una función que dado un número y un entero, retorna un par.
 mapPoly ::= (Number Integer -> Number * Integer) Polynomial -> Polynomial
 |#
+(define (mapPoly fun poly)
+  (match poly
+    [(nullp) poly]
+    [(plus coef exp rem)
+     (let ([x (fun coef exp)])
+       (plus (car x) (cdr x) (mapPoly fun rem)))]))
+
+#|
+Multiplica dos polinomios (no necesariamente normalizados).
+multPoly ::= Polynomial Polynomial -> Polynomial
+|#
+(define (multPoly p1 p2)
+  (match p1
+    [(nullp) (nullp)]
+    [(plus coef exp rem)
+     (sumaPoly (mapPoly (λ (c m) (cons (* c coef) (+ m exp))) p2) (multPoly rem p2))]))
+
+;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 4      ;;;;;;;;;;;;;;;;;;;;;;
