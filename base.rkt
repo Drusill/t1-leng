@@ -153,8 +153,8 @@ multPoly ::= Polynomial Polynomial -> Polynomial
 
 ;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 4      ;;;;;;;;;;;;;;;;;;;;;;
 #|
-Recibe un argumento y una función que recibe un número y un entero que retorna un argumento para luego retornar
-una función que recibe un polinomio y retorna otro argumento. foldPoly captura el esquema de
+Recibe un argumento y una función, que recibe un número y un entero, que retorna un argumento para luego retornar
+una función que recibe un polinomio y retorna otro argumento. La función foldPoly captura el esquema de
 recursión estructural sobre Polynomial.
 foldPoly ::= A (Number Integer -> A) -> (Polynomial -> A)
 |#
@@ -165,11 +165,10 @@ foldPoly ::= A (Number Integer -> A) -> (Polynomial -> A)
       [(plus c g r) (f c g ((foldPoly a f) r))])))
 
 #|
-Recibe un punto representado a través de un número y evalúa un polinomio en dicho punto, retornando
+Recibe un punto representado a través de un número y permite evaluar un polinomio en dicho punto, retornando
 un número.
 evalPoly ::= Number -> (Polynomial -> Number)
 |#
-
 (define (evalPoly n)
   (λ (p)
     (match p

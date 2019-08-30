@@ -107,3 +107,5 @@
 (test ((evalPoly 3) (plus 1 -1 (nullp))) (/ 1 3))
 (test ((evalPoly 0) (plus 1 2 (plus 2 3 (nullp)))) 0)
 (test ((evalPoly 4) (plus 1 (/ 1 2) (nullp))) 2)
+(test ((evalPoly -2) (plus 1 2 (plus 1 3 (nullp)))) -4)
+(test ((evalPoly (/ 1 2)) (plus 2 2 (plus 4 3 (nullp)))) 1)
