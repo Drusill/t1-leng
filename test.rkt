@@ -1,5 +1,13 @@
 #lang play
 
+#|
+Tests Tarea 1 - Lenguajes de Programación
+Primavera 2019
+--------------
+Raúl Cid
+Víctor Caro
+|#
+
 (require "base.rkt")
 
 (print-only-errors #t)

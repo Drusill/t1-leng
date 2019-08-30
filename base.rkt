@@ -5,7 +5,7 @@ Tarea 1 - Lenguajes de Programación
 Primavera 2019
 --------------
 Raúl Cid
-Victor Caro
+Víctor Caro
 |#
 
 ;;;;;;;;;;;;;;;;;;;;;;       DEFTYPE       ;;;;;;;;;;;;;;;;;;;;;;
