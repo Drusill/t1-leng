@@ -25,6 +25,7 @@
 (test (sumaMon 3 3 (plus 4 4 (plus 2 2 (nullp)))) (plus 4 4 (plus 3 3 (plus 2 2 (nullp)))))
 (test (sumaMon 10 2 (plus 4 4 (plus 2 2 (nullp)))) (plus 4 4 (plus 12 2 (nullp))))
 (test (sumaMon -2 2 (plus 4 4 (plus 2 2 (nullp)))) (plus 4 4 (nullp)))
+(test (sumaMon 3 10 (plus 4 13 (plus -3 10 (plus 1 0 (plus -5 -2 (nullp)))))) (plus 4 13 (plus 1 0 (plus -5 -2 (nullp)))))
 
 ;; normalize
 (test (normalize (nullp)) (nullp))
@@ -89,3 +90,20 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;     EJERCICIO 4      ;;;;;;;;;;;;;;;;;;;;;;
+
+;; foldPoly
+(test ((foldPoly 1 (λ (a b c) (+ a b c))) (plus 2 1 (plus 1 0 (nullp)))) 5)
+(test ((foldPoly 'fin list) (plus 2 1 (plus 1 0 (nullp)))) (list 2 1 (list 1 0 'fin)))
+(test ((foldPoly 10 *) (plus 3 2 (nullp))) 60)
+(test ((foldPoly 15 (λ (a b c)(+ (expt a b) c))) (plus 2 2 (plus 3 4 (nullp)))) 100)
+
+
+;; evalPoly
+(test ((evalPoly 3) (plus 2 3 (plus -6 2 (plus 2 1 ( plus -1 0 (nullp)))))) 5)
+(test ((evalPoly 2) (plus 1 10 (plus 2 3 (plus -4 2 (plus 5 0 (plus 10 -1 (nullp))))))) 1034)
+(test ((evalPoly 100) (nullp))  0)
+(test ((evalPoly 1) (plus 10 3 (plus 90 -10 (plus -100 87 (plus 1 0 (nullp)))))) 1)
+(test ((evalPoly 5) (plus 1 2 (plus 1 3 (nullp)))) 150)
+(test ((evalPoly 3) (plus 1 -1 (nullp))) (/ 1 3))
+(test ((evalPoly 0) (plus 1 2 (plus 2 3 (nullp)))) 0)
+(test ((evalPoly 4) (plus 1 (/ 1 2) (nullp))) 2)
